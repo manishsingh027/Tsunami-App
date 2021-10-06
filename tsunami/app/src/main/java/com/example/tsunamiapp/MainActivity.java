@@ -22,6 +22,9 @@ import android.util.Log;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.databinding.DataBindingUtil;
+
+import com.example.tsunamiapp.databinding.ActivityMainBinding;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -41,7 +44,7 @@ import java.text.SimpleDateFormat;
  * Displays information about a single earthquake.
  */
 public class MainActivity extends AppCompatActivity {
-
+    ActivityMainBinding binding;
     /** Tag for the log messages */
     public static final String LOG_TAG = MainActivity.class.getSimpleName();
 
@@ -51,6 +54,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        binding = DataBindingUtil.setContentView(this,R.layout.activity_main);
         setContentView(R.layout.activity_main);
 
         // Kick off an {@link AsyncTask} to perform the network request
@@ -63,15 +67,15 @@ public class MainActivity extends AppCompatActivity {
      */
     private void updateUi(Event earthquake) {
         // Display the earthquake title in the UI
-        TextView titleTextView = (TextView) findViewById(R.id.title);
+        TextView titleTextView = (TextView) binding.title;
         titleTextView.setText(earthquake.title);
 
         // Display the earthquake date in the UI
-        TextView dateTextView = (TextView) findViewById(R.id.date);
+        TextView dateTextView = (TextView) binding.date;
         dateTextView.setText(getDateString(earthquake.time));
 
         // Display whether or not there was a tsunami alert in the UI
-        TextView tsunamiTextView = (TextView) findViewById(R.id.tsunami_alert);
+        TextView tsunamiTextView = (TextView) binding.tsunamiAlert;
         tsunamiTextView.setText(getTsunamiAlertString(earthquake.tsunamiAlert));
     }
 
